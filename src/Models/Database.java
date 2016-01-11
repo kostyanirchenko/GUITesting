@@ -61,7 +61,7 @@ public class Database {
      * Устанавливает соединение с базой данных по заданому URL, логину и паролю.
      */
     public static void setConnection() {
-        String url = "jdbc:mysql://localhost:3306/test";
+        String url = "jdbc:mysql://localhost:3306/testing";
         String login = "root";
         String password = "root";
         try {

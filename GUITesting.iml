@@ -7,6 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Connector.J 5" level="application" />
+    <orderEntry type="library" name="controlsfx-8.0.6_20" level="application" />
   </component>
 </module>
-

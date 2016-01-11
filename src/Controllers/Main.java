@@ -1,5 +1,6 @@
 package Controllers;
 
+import Controllers.views.admin.NewController;
 import Controllers.views.menu.MenuController;
 import Controllers.views.testing.TestingController;
 import javafx.application.Application;
@@ -7,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -56,6 +58,24 @@ public class Main extends Application {
             rootLayout.setCenter(testing);
             TestingController testingController = loader.getController();
             testingController.setMain(this);
+        } catch (IOException e) {
+
+        }
+    }
+
+    public void newQuestion() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("views/admin/new.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+            Stage newStage = new Stage();
+            newStage.setTitle("Добавление");
+            newStage.initModality(Modality.WINDOW_MODAL);
+            newStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            newStage.setScene(scene);
+            NewController newController = loader.getController();
+            newController.setNewStage(newStage);
         } catch (IOException e) {
 
         }

@@ -6,16 +6,20 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.views.menu.MenuController">
    <top>
-      <MenuBar BorderPane.alignment="CENTER">
+      <MenuBar fx:id="menu" BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="Файл">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#exitAction" text="Выход" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Редактировать">
+          <Menu fx:id="edit" mnemonicParsing="false" onMenuValidation="#menuValidationAction" text="Редактировать">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#adminLoginAction" text="Вход администратора" />
+              <MenuItem fx:id="adminLoginButton" mnemonicParsing="false" onAction="#adminLoginAction" text="Вход администратора" />
+                  <MenuItem fx:id="editQuestionButton" mnemonicParsing="false" onAction="#editQuestionAction" text="Редактировать вопрос" />
+                  <MenuItem fx:id="addQuestionButton" mnemonicParsing="false" onAction="#addQuestionAction" text="Добавить вопрос" />
+                  <MenuItem fx:id="deleteQuestionButton" mnemonicParsing="false" onAction="#deleteQuestionAction" text="Удалить вопрос" />
+                  <MenuItem fx:id="adminExitButton" mnemonicParsing="false" onAction="#adminExitAction" text="Выход" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Помощь">

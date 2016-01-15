@@ -4,7 +4,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.views.admin.NewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.views.newQuestion.NewController">
    <children>
       <GridPane prefHeight="296.0" prefWidth="330.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <columnConstraints>
@@ -16,6 +16,7 @@
           <RowConstraints maxHeight="72.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="78.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="71.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
@@ -29,6 +30,8 @@
             <Label text="Вариант ответа №2" GridPane.rowIndex="2" />
             <Label text="Вариант ответа №3" GridPane.rowIndex="3" />
             <Label text="Вариант ответа №4" GridPane.rowIndex="4" />
+            <Label text="Правильный ответ" GridPane.rowIndex="5" />
+            <TextField fx:id="rightAnswer" promptText="Введите правильный ответ" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
       <HBox layoutX="174.0" layoutY="326.0" prefHeight="25.0" prefWidth="124.0" spacing="15.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">

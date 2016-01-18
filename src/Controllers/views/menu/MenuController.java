@@ -138,7 +138,7 @@ public class MenuController {
                     questionText = selectResult.getString(2);
                 } else {
                     Database.showSimpleDialog(Alert.AlertType.ERROR, "Ошибка", "Ошибка базы данных",
-                            "Вопрос, под указанным вами номером не существует, попытайтесь указать другой.");
+                            "Вопрос, под указанным вами номером не существует, попытайтесь указать другой.", true);
                     return;
                 }
                 selectResult.close();
@@ -171,7 +171,7 @@ public class MenuController {
                 boolean editClicked = main.editQuestions(editQuestion, editId);
                 if(editClicked) {
                     Database.showSimpleDialog(Alert.AlertType.INFORMATION, "Изменение данных", "Операция прошла успешно",
-                            "Данные успешно изменены!");
+                            "Данные успешно изменены!", true);
                 }
             } catch (SQLException e) {
                 Database.throwingException(e);
@@ -183,7 +183,7 @@ public class MenuController {
         Questions newQuestion = new Questions();
         boolean addClicked = main.newQuestion(newQuestion);
         if(addClicked) {
-            Database.showSimpleDialog(Alert.AlertType.INFORMATION, "Добавление данных", "Операция прошла успешно", "Данные успешно добавлены!");
+            Database.showSimpleDialog(Alert.AlertType.INFORMATION, "Добавление данных", "Операция прошла успешно", "Данные успешно добавлены!", true);
         }
     }
 
@@ -233,7 +233,7 @@ public class MenuController {
                             PreparedStatement answerStatement = Database.getPreparedStatement(answerQuery, false);
                             answerStatement.setInt(1, Integer.parseInt(questions.getAnswerId()));
                             answerStatement.executeUpdate();
-                            Database.showSimpleDialog(Alert.AlertType.INFORMATION, "Удалено", "Успешно", "Удаление выбраного вопросо успешно выполнено");
+                            Database.showSimpleDialog(Alert.AlertType.INFORMATION, "Удалено", "Успешно", "Удаление выбраного вопроса успешно выполнено", true);
                         } catch (SQLException e) {
                             Database.throwingException(e);
                         }

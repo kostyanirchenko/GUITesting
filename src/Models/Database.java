@@ -268,11 +268,15 @@ public class Database {
      *
      * @param type (INFORMATION, WARNING, ERROR, CONFIRMATION)
      */
-    public static void showSimpleDialog(Alert.AlertType type, String title, String header, String content) {
+    public static void showSimpleDialog(Alert.AlertType type, String title, String header, String content, boolean showAndWait) {
         Alert info = new Alert(type);
         info.setTitle(title);
         info.setHeaderText(header);
         info.setContentText(content);
-        info.showAndWait();
+        if(!showAndWait) {
+            info.show();
+        } else {
+            info.showAndWait();
+        }
     }
 }

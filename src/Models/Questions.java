@@ -86,5 +86,5 @@ public class Questions {
 
     public String getRightAnswer() { return rightAnswer; }
 
-    public void setRightAnswer(String rightAnswer) { this.firstAnswer = rightAnswer; }
+    public void setRightAnswer(String rightAnswer) { this.rightAnswer = rightAnswer; }
 }

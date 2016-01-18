@@ -42,25 +42,27 @@ public class Main extends Application {
             Database.setStatement();
             Database.setResultSet(Database.select("questions", "", ""));
             ResultSet questions = Database.getResultSet();
-            while(questions.next()) {
-                Database.setStatement();
-                Database.setResultSet(Database.select("answers", "questionId", questions.getString(1)));
-                ResultSet answers = Database.getResultSet();
-                while(answers.next()) {
-                    questionsList.add(new Questions(
-                            questions.getString("questionId"),
-                            questions.getString("questionText"),
-                            answers.getString("answersId"),
-                            answers.getString("firstAnswer"),
-                            answers.getString("secondAnswer"),
-                            answers.getString("thirdAnswer"),
-                            answers.getString("fourthAnswer"),
-                            answers.getString("rightAnswer"))
-                    );
+            if(!questions.wasNull()) {
+                while (questions.next()) {
+                    Database.setStatement();
+                    Database.setResultSet(Database.select("answers", "questionId", questions.getString(1)));
+                    ResultSet answers = Database.getResultSet();
+                    while (answers.next()) {
+                        questionsList.add(new Questions(
+                                questions.getString("questionId"),
+                                questions.getString("questionText"),
+                                answers.getString("answersId"),
+                                answers.getString("firstAnswer"),
+                                answers.getString("secondAnswer"),
+                                answers.getString("thirdAnswer"),
+                                answers.getString("fourthAnswer"),
+                                answers.getString("rightAnswer"))
+                        );
+                    }
+                    answers.close();
                 }
-                answers.close();
+                questions.close();
             }
-            questions.close();
         } catch (SQLException e) {
             Database.throwingException(e);
         }

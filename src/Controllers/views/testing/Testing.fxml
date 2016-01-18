@@ -24,17 +24,21 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="a)" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <Label text="b)" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-            <Label text="c)" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <Label text="d)" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+            <Label fx:id="firstAnswerLabel" text="a)" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <Label fx:id="secondAnswerLabel" text="b)" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <Label fx:id="thirdAnswerLabel" text="c)" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <Label fx:id="fourthAnswerLabel" text="d)" GridPane.columnIndex="0" GridPane.rowIndex="3" />
             <RadioButton fx:id="firstAnswerButton" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="0" />
             <RadioButton fx:id="secondAnswerButton" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <RadioButton fx:id="thirdAnswerButton" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <RadioButton fx:id="fourthAnswerButton" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
-      <Label fx:id="questionLabel" layoutX="127.0" layoutY="40.0" prefHeight="27.0" prefWidth="300.0" textAlignment="CENTER" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="25.0" />
+      <Label fx:id="questionLabel" layoutX="127.0" layoutY="8.0" prefHeight="66.0" prefWidth="300.0" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="8.0" />
       <Button fx:id="answerButton" layoutX="230.0" layoutY="211.0" mnemonicParsing="false" onAction="#answerButtonAction" text="Ответить" />
+      <Label fx:id="outLabel" layoutX="49.0" layoutY="242.0" prefHeight="27.0" prefWidth="327.0" textAlignment="CENTER" />
+      <Label fx:id="scoreLabel" layoutX="25.0" layoutY="276.0" />
+      <Label fx:id="rightLabel" layoutX="26.0" layoutY="304.0" />
+      <Label fx:id="wrongLabel" layoutX="24.0" layoutY="332.0" />
    </children>
 </AnchorPane>

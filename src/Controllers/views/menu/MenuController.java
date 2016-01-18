@@ -6,6 +6,8 @@ import Models.Database;
 import Models.Questions;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.geometry.Insets;
@@ -15,12 +17,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
- * Created by Kostya Nirchenko on 10.01.2016.
+ * Created by Kostya Nirchenko.
+ *
+ * @since 10.01.2016
  */
 public class MenuController {
 
@@ -181,6 +188,62 @@ public class MenuController {
     }
 
     public void deleteQuestionAction(ActionEvent actionEvent) {
+        List<Questions> questionsList = new ArrayList<>();
+        try {
+            Database.setStatement();
+            Database.setResultSet(Database.select("questions", "", ""));
+            ResultSet questionsResultSet = Database.getResultSet();
+            while(questionsResultSet.next()) {
+                Database.setStatement();
+                Database.setResultSet(Database.select("answers", "questionId", questionsResultSet.getString(1)));
+                ResultSet answersResultSet = Database.getResultSet();
+                while(answersResultSet.next()) {
+                    questionsList.add(new Questions(
+                            questionsResultSet.getString("questionId"),
+                            questionsResultSet.getString("questionText"),
+                            answersResultSet.getString("answersId"),
+                            answersResultSet.getString("firstAnswer"),
+                            answersResultSet.getString("secondAnswer"),
+                            answersResultSet.getString("thirdAnswer"),
+                            answersResultSet.getString("fourthAnswer"),
+                            answersResultSet.getString("rightAnswer")
+                    ));
+                }
+                answersResultSet.close();
+            }
+            questionsResultSet.close();
+            List<String> questionsTextList = new ArrayList<>();
+            for(Questions questions : questionsList) {
+                questionsTextList.add(questions.getQuestion());
+            }
+            ChoiceDialog<String> choiceDeleteQuestionsDialog = new ChoiceDialog<>("", questionsTextList);
+            choiceDeleteQuestionsDialog.setTitle("Удаление");
+            choiceDeleteQuestionsDialog.setHeaderText("Удаление вопроса из базы данных");
+            choiceDeleteQuestionsDialog.setContentText("Выберите вопрос, который необходимо удалить из базы данных");
+            Optional<String> result = choiceDeleteQuestionsDialog.showAndWait();
+            result.ifPresent(text -> {
+                for(Questions questions : questionsList) {
+                    if(result.get().equals(questions.getQuestion())) {
+                        try {
+                            String questionQuery = Database.setPreparedStatement("DELETE", "questions", null, "questionId", "?");
+                            PreparedStatement questionStatement = Database.getPreparedStatement(questionQuery, false);
+                            questionStatement.setInt(1, Integer.parseInt(questions.getId()));
+                            questionStatement.executeUpdate();
+                            String answerQuery = Database.setPreparedStatement("DELETE", "answers", null, "answersId", "?");
+                            PreparedStatement answerStatement = Database.getPreparedStatement(answerQuery, false);
+                            answerStatement.setInt(1, Integer.parseInt(questions.getAnswerId()));
+                            answerStatement.executeUpdate();
+                            Database.showSimpleDialog(Alert.AlertType.INFORMATION, "Удалено", "Успешно", "Удаление выбраного вопросо успешно выполнено");
+                        } catch (SQLException e) {
+                            Database.throwingException(e);
+                        }
+                    }
+                }
+            });
+        } catch (SQLException e) {
+            Database.throwingException(e);
+        }
+        questionsList.clear();
     }
 
     public void adminExitAction(ActionEvent actionEvent) {

@@ -11,7 +11,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
- * Created by Kinndzadza on 15.01.2016.
+ * Created by Kostya Nirchenko.
+ *
+ * @since 15.01.2016
  */
 public class EditController {
     public TextField questionField;
@@ -38,7 +40,23 @@ public class EditController {
         secondAnswerField.setText(questions.getSecondAnswer());
         thirdAnswerField.setText(questions.getThirdAnswer());
         fourthAnswerField.setText(questions.getFourthAnswer());
-        rightAnswerField.setText(questions.getRightAnswer());
+        int rightAnswer = 0;
+        if(questions.getFirstAnswer().equals(questions.getRightAnswer())) {
+            rightAnswer = 1;
+        } else {
+            if(questions.getSecondAnswer().equals(questions.getRightAnswer())) {
+                rightAnswer = 2;
+            } else {
+                if(questions.getThirdAnswer().equals(questions.getRightAnswer())) {
+                    rightAnswer = 3;
+                } else {
+                    if(questions.getFourthAnswer().equals(questions.getRightAnswer())) {
+                        rightAnswer = 4;
+                    }
+                }
+            }
+        }
+        rightAnswerField.setText(Integer.toString(rightAnswer));
     }
 
     public void setEditId(String editId) {
@@ -66,12 +84,22 @@ public class EditController {
                     ", fourthAnswer = " + "? " +
                     ", rightAnswer = " + "?",
                     "answersId", questions.getAnswerId());
+            int rightAnswer = Integer.parseInt(rightAnswerField.getText());
             PreparedStatement answersStatement = Database.getPreparedStatement(answerQuery, false);
             answersStatement.setString(1, firstAnswerField.getText());
             answersStatement.setString(2, secondAnswerField.getText());
             answersStatement.setString(3, thirdAnswerField.getText());
             answersStatement.setString(4, fourthAnswerField.getText());
-            answersStatement.setString(5, rightAnswerField.getText());
+            switch (rightAnswer) {
+                case 1: answersStatement.setString(5, firstAnswerField.getText());;
+                    break;
+                case 2: answersStatement.setString(5, secondAnswerField.getText());
+                    break;
+                case 3: answersStatement.setString(5, thirdAnswerField.getText());
+                    break;
+                case 4: answersStatement.setString(5, fourthAnswerField.getText());
+                    break;
+            }
             answersStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

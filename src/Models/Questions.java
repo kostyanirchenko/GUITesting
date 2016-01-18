@@ -2,7 +2,9 @@ package Models;
 
 
 /**
- * Created by User on 10.01.2016.
+ * Created by Kostya Nirchenko.
+ *
+ * @since 10.01.2016
  */
 public class Questions {
 

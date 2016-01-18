@@ -6,7 +6,9 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 
 /**
- * Created by Kostya Nirchenko on 10.01.2016.
+ * Created by Kostya Nirchenko.
+ *
+ * @since 10.01.2016
  */
 public class TestingController {
 

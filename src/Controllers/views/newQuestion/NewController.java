@@ -13,7 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Created by Kinndzadza on 11.01.2016.
+ * Created by Kostya Nirchenko.
+ *
+ * @since 11.01.2016
  */
 public class NewController {
     public TextField questionField;

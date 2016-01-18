@@ -24,16 +24,17 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="a)" GridPane.rowIndex="0" />
-            <Label text="b)" GridPane.rowIndex="1" />
-            <Label text="c)" GridPane.rowIndex="2" />
-            <Label text="d)" GridPane.rowIndex="3" />
-            <RadioButton fx:id="firstAnswerButton" mnemonicParsing="false" GridPane.columnIndex="1" />
+            <Label text="a)" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <Label text="b)" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <Label text="c)" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <Label text="d)" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+            <RadioButton fx:id="firstAnswerButton" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="0" />
             <RadioButton fx:id="secondAnswerButton" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <RadioButton fx:id="thirdAnswerButton" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <RadioButton fx:id="fourthAnswerButton" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
-      <Label layoutX="127.0" layoutY="40.0" prefHeight="27.0" prefWidth="300.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="25.0" />
+      <Label fx:id="questionLabel" layoutX="127.0" layoutY="40.0" prefHeight="27.0" prefWidth="300.0" textAlignment="CENTER" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="25.0" />
+      <Button fx:id="answerButton" layoutX="230.0" layoutY="211.0" mnemonicParsing="false" onAction="#answerButtonAction" text="Ответить" />
    </children>
 </AnchorPane>

@@ -79,6 +79,7 @@ public class Main extends Application {
             primaryStage.setScene(scene);
             MenuController menuController = loader.getController();
             menuController.setMain(this);
+            primaryStage.setResizable(false);
             primaryStage.show();
         } catch (IOException e) {
             Database.throwingException(e);
@@ -92,7 +93,7 @@ public class Main extends Application {
             AnchorPane testing = (AnchorPane) loader.load();
             rootLayout.setCenter(testing);
             TestingController testingController = loader.getController();
-            testingController.setQuestionsList(questionsList);
+            testingController.setQuestionsList(this.questionsList);
             testingController.setMain(this);
         } catch (IOException e) {
             Database.throwingException(e);

@@ -9,6 +9,7 @@ import Models.Questions;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -68,6 +69,7 @@ public class Main extends Application {
         }
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Тестирование");
+        this.primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("views/images/testing.png")));
         initRootLayout();
         showTesting();
     }
@@ -109,6 +111,7 @@ public class Main extends Application {
             AnchorPane page = (AnchorPane) loader.load();
             Stage newStage = new Stage();
             newStage.setTitle("Добавление");
+            newStage.getIcons().add(new Image(this.getClass().getResourceAsStream("views/images/new.png")));
             newStage.initModality(Modality.WINDOW_MODAL);
             newStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
@@ -131,6 +134,7 @@ public class Main extends Application {
             AnchorPane pane = (AnchorPane) loader.load();
             Stage editStage = new Stage();
             editStage.setTitle("Редактирование");
+            editStage.getIcons().add(new Image(this.getClass().getResourceAsStream("views/images/edit.png")));
             editStage.initModality(Modality.WINDOW_MODAL);
             editStage.initOwner(primaryStage);
             Scene scene = new Scene(pane);

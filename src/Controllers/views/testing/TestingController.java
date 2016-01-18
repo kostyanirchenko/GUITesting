@@ -7,7 +7,9 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.*;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
 import javax.swing.filechooser.FileSystemView;
@@ -53,9 +55,6 @@ public class TestingController {
     private int iterate = 1;
 
     public void setMain(Main main) {
-        /*this.score = 0;
-        this.rightAnswers = 0;
-        this.wrongAnswers = 0;*/
         this.main = main;
         firstAnswerButton.setToggleGroup(buttonsGroup);
         secondAnswerButton.setToggleGroup(buttonsGroup);
@@ -120,11 +119,14 @@ public class TestingController {
             answerButton.setVisible(false);
             outLabel.setText("Время окончания тестирования: " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(System.currentTimeMillis()));
             try {
-                Database.showSimpleDialog(Alert.AlertType.INFORMATION,
+                Alert confirm = Database.showSimpleDialog(Alert.AlertType.INFORMATION,
                         "УРА!", "Вы ответили на все вопросы", "Дано правильных ответов: " + rightAnswers + "\n" +
                                 "Дано неправильных ответов: " + wrongAnswers + "\n" +
                                 "Получено баллов: " + score + "\n" +
-                                "Имя компьютера: " + InetAddress.getLocalHost().getHostName() + "\n" + "IP: " + InetAddress.getLocalHost().getHostAddress(), false);
+                                "Имя компьютера: " + InetAddress.getLocalHost().getHostName() + "\n" + "IP: " + InetAddress.getLocalHost().getHostAddress(), true);
+                Stage confirmStage = (Stage) confirm.getDialogPane().getScene().getWindow();
+                confirmStage.getIcons().add(new javafx.scene.image.Image(Main.class.getResourceAsStream("views/images/confirm.png")));
+                confirmStage.showAndWait();
                 ImageIO.write(new Robot().createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize())), "png", new File(FileSystemView.getFileSystemView().getHomeDirectory(), new SimpleDateFormat("dd-MM-yyyy-HH-mm-ss").format(System.currentTimeMillis()) + ".png"));
             } catch (UnknownHostException e) {
                 Database.throwingException(e);

@@ -13,8 +13,10 @@ import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.sql.PreparedStatement;
@@ -55,7 +57,7 @@ public class MenuController {
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Вход администратора");
         dialog.setHeaderText("Пожалуйста, выполните вход администратора");
-        dialog.setGraphic(new ImageView(this.getClass().getResource("logout.png").toString()));
+        dialog.setGraphic(new ImageView(this.getClass().getResource("login.png").toString()));
         ButtonType loginButtonType = new ButtonType("Вход", ButtonBar.ButtonData.OK_DONE);
         ButtonType cancelButtonType = new ButtonType("Назад", ButtonBar.ButtonData.CANCEL_CLOSE);
         dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, cancelButtonType);
@@ -96,8 +98,17 @@ public class MenuController {
                         loginflag = true;
                         adminLoginButton.setDisable(true);
                     } else {
-                        loginflag = false;
+                        Alert logErr = Database.showSimpleDialog(Alert.AlertType.ERROR, "Ошибка", null, "Пользователь не находится в группе \"Администраторы\" ", true);
+                        Stage logErrStage = (Stage) logErr.getDialogPane().getScene().getWindow();
+                        logErrStage.getIcons().add(new Image(Main.class.getResourceAsStream("views/images/error.png")));
+                        logErr.showAndWait();
                     }
+                } else {
+                    Alert passErr = Database.showSimpleDialog(Alert.AlertType.ERROR, "Ошибка", null, "Неверное имя пользователя или пароль, попробуйте еще раз", true);
+                    Stage passErrStage = (Stage) passErr.getDialogPane().getScene().getWindow();
+                    passErrStage.getIcons().add(new Image(Main.class.getResourceAsStream("views/images/error.png")));
+                    passErrStage.showAndWait();
+                    loginflag = false;
                 }
                 adminLogin.close();
             } catch (SQLException e) {
@@ -137,8 +148,11 @@ public class MenuController {
                     editId = selectResult.getString(1);
                     questionText = selectResult.getString(2);
                 } else {
-                    Database.showSimpleDialog(Alert.AlertType.ERROR, "Ошибка", "Ошибка базы данных",
+                    Alert err = Database.showSimpleDialog(Alert.AlertType.ERROR, "Ошибка", "Ошибка базы данных",
                             "Вопрос, под указанным вами номером не существует, попытайтесь указать другой.", true);
+                    Stage errStage = (Stage) err.getDialogPane().getScene().getWindow();
+                    errStage.getIcons().add(new Image(Main.class.getResourceAsStream("views/images/error.png")));
+                    errStage.showAndWait();
                     return;
                 }
                 selectResult.close();
@@ -170,8 +184,11 @@ public class MenuController {
                 answers.close();
                 boolean editClicked = main.editQuestions(editQuestion, editId);
                 if(editClicked) {
-                    Database.showSimpleDialog(Alert.AlertType.INFORMATION, "Изменение данных", "Операция прошла успешно",
+                    Alert confirm = Database.showSimpleDialog(Alert.AlertType.INFORMATION, "Изменение данных", "Операция прошла успешно",
                             "Данные успешно изменены!", true);
+                    Stage confirmStage = (Stage) confirm.getDialogPane().getScene().getWindow();
+                    confirmStage.getIcons().add(new Image(Main.class.getResourceAsStream("views/images/confirm.png")));
+                    confirmStage.showAndWait();
                 }
             } catch (SQLException e) {
                 Database.throwingException(e);
@@ -183,7 +200,10 @@ public class MenuController {
         Questions newQuestion = new Questions();
         boolean addClicked = main.newQuestion(newQuestion);
         if(addClicked) {
-            Database.showSimpleDialog(Alert.AlertType.INFORMATION, "Добавление данных", "Операция прошла успешно", "Данные успешно добавлены!", true);
+            Alert confirm = Database.showSimpleDialog(Alert.AlertType.INFORMATION, "Добавление данных", "Операция прошла успешно", "Данные успешно добавлены!", true);
+            Stage confirmStage = (Stage) confirm.getDialogPane().getScene().getWindow();
+            confirmStage.getIcons().add(new Image(Main.class.getResourceAsStream("views/images/confirm.png")));
+            confirmStage.showAndWait();
         }
     }
 
@@ -233,7 +253,10 @@ public class MenuController {
                             PreparedStatement answerStatement = Database.getPreparedStatement(answerQuery, false);
                             answerStatement.setInt(1, Integer.parseInt(questions.getAnswerId()));
                             answerStatement.executeUpdate();
-                            Database.showSimpleDialog(Alert.AlertType.INFORMATION, "Удалено", "Успешно", "Удаление выбраного вопроса успешно выполнено", true);
+                            Alert confirm = Database.showSimpleDialog(Alert.AlertType.INFORMATION, "Удалено", "Успешно", "Удаление выбраного вопросо успешно выполнено", true);
+                            Stage confirmStage = (Stage) confirm.getDialogPane().getScene().getWindow();
+                            confirmStage.getIcons().add(new Image(Main.class.getResourceAsStream("views/images/confirm.png")));
+                            confirmStage.showAndWait();
                         } catch (SQLException e) {
                             Database.throwingException(e);
                         }

@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.stage.Stage;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -268,15 +269,11 @@ public class Database {
      *
      * @param type (INFORMATION, WARNING, ERROR, CONFIRMATION)
      */
-    public static void showSimpleDialog(Alert.AlertType type, String title, String header, String content, boolean showAndWait) {
+    public static Alert showSimpleDialog(Alert.AlertType type, String title, String header, String content, boolean setIcon) {
         Alert info = new Alert(type);
         info.setTitle(title);
         info.setHeaderText(header);
         info.setContentText(content);
-        if(!showAndWait) {
-            info.show();
-        } else {
-            info.showAndWait();
-        }
+        return info;
     }
 }

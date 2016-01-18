@@ -22,14 +22,14 @@ public class Questions {
     }
 
     public Questions(String id, String question, String answerId, String firstAnswer, String secondAnswer, String thirdAnswer, String fourthAnswer, String rightAnswer) {
-        this.id = id;
-        this.question = question;
-        this.answerId = answerId;
-        this.firstAnswer = firstAnswer;
-        this.secondAnswer = secondAnswer;
-        this.thirdAnswer = thirdAnswer;
-        this.fourthAnswer = fourthAnswer;
-        this.rightAnswer = rightAnswer;
+        setId(id);
+        setQuestion(question);
+        setAnswerId(answerId);
+        setFirstAnswer(firstAnswer);
+        setSecondAnswer(secondAnswer);
+        setThirdAnswer(thirdAnswer);
+        setFourthAnswer(fourthAnswer);
+        setRightAnswer(rightAnswer);
     }
 
     public String getId() {

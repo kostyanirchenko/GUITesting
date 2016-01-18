@@ -15,6 +15,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Kostya Nirchenko.
@@ -25,6 +29,7 @@ public class Main extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+    private List<Questions> questionsList = new ArrayList<>();
 
     public Main() {
 
@@ -32,7 +37,33 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Database.setConnection();
+        try {
+            Database.setConnection();
+            Database.setStatement();
+            Database.setResultSet(Database.select("questions", "", ""));
+            ResultSet questions = Database.getResultSet();
+            while(questions.next()) {
+                Database.setStatement();
+                Database.setResultSet(Database.select("answers", "questionId", questions.getString(1)));
+                ResultSet answers = Database.getResultSet();
+                while(answers.next()) {
+                    questionsList.add(new Questions(
+                            questions.getString("questionId"),
+                            questions.getString("questionText"),
+                            answers.getString("answersId"),
+                            answers.getString("firstAnswer"),
+                            answers.getString("secondAnswer"),
+                            answers.getString("thirdAnswer"),
+                            answers.getString("fourthAnswer"),
+                            answers.getString("rightAnswer"))
+                    );
+                }
+                answers.close();
+            }
+            questions.close();
+        } catch (SQLException e) {
+            Database.throwingException(e);
+        }
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Тестирование");
         initRootLayout();
@@ -61,6 +92,7 @@ public class Main extends Application {
             AnchorPane testing = (AnchorPane) loader.load();
             rootLayout.setCenter(testing);
             TestingController testingController = loader.getController();
+            testingController.setQuestionsList(questionsList);
             testingController.setMain(this);
         } catch (IOException e) {
             Database.throwingException(e);

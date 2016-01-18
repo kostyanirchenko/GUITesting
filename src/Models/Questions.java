@@ -8,22 +8,26 @@ public class Questions {
 
     private String id;
     private String question;
+    private String answerId;
     private String firstAnswer;
     private String secondAnswer;
     private String thirdAnswer;
     private String fourthAnswer;
+    private String rightAnswer;
 
     public Questions() {
-        this(null, null, null, null, null, null);
+        this(null, null, null, null, null, null, null, null);
     }
 
-    public Questions(String id, String question, String firstAnswer, String secondAnswer, String thirdAnswer, String fourthAnswer) {
+    public Questions(String id, String question, String answerId, String firstAnswer, String secondAnswer, String thirdAnswer, String fourthAnswer, String rightAnswer) {
         this.id = id;
         this.question = question;
+        this.answerId = answerId;
         this.firstAnswer = firstAnswer;
         this.secondAnswer = secondAnswer;
         this.thirdAnswer = thirdAnswer;
         this.fourthAnswer = fourthAnswer;
+        this.rightAnswer = rightAnswer;
     }
 
     public String getId() {
@@ -41,6 +45,10 @@ public class Questions {
     public void setQuestion(String question) {
         this.question = question;
     }
+
+    public String getAnswerId() { return answerId; }
+
+    public void setAnswerId(String answerId) { this.answerId = answerId; }
 
     public String getFirstAnswer() {
         return firstAnswer;
@@ -73,4 +81,8 @@ public class Questions {
     public void setFourthAnswer(String fourthAnswer) {
         this.fourthAnswer = fourthAnswer;
     }
+
+    public String getRightAnswer() { return rightAnswer; }
+
+    public void setRightAnswer(String rightAnswer) { this.firstAnswer = rightAnswer; }
 }

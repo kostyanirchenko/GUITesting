@@ -1,8 +1,10 @@
 package Controllers.views.menu;
 
 import Controllers.Main;
+
 import Models.Database;
 import Models.Questions;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -13,7 +15,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -113,13 +114,68 @@ public class MenuController {
     }
 
     public void editQuestionAction(ActionEvent actionEvent) {
+        TextInputDialog askDialog = new TextInputDialog();
+        askDialog.setTitle("Выбор вопроса");
+        askDialog.setHeaderText("Укажите номер вопроса");
+        askDialog.setContentText("Пожалуйста, введите в поле номер вопроса, который вы хотите редактировать.");
+        Optional<String> result = askDialog.showAndWait();
+        if(result.isPresent()) {
+            try {
+                Database.setStatement();
+                Database.setResultSet(Database.select("questions", "questionId", "'" + result.get() + "'"));
+                ResultSet selectResult = Database.getResultSet();
+                String editId = "";
+                String questionText = "";
+                if(selectResult.next()) {
+                    editId = selectResult.getString(1);
+                    questionText = selectResult.getString(2);
+                } else {
+                    Database.showSimpleDialog(Alert.AlertType.ERROR, "Ошибка", "Ошибка базы данных",
+                            "Вопрос, под указанным вами номером не существует, попытайтесь указать другой.");
+                    return;
+                }
+                selectResult.close();
+                Database.setStatement();
+                Database.setResultSet(Database.select("answers", "questionId", "'" + editId + "'"));
+                ResultSet answers = Database.getResultSet();
+                String answersId = "";
+                String firstAnswer = "";
+                String secondAnswer = "";
+                String thirdAnswer = "";
+                String fourthAnswer = "";
+                String rightAnswer = "";
+                if(answers.next()) {
+                    answersId = answers.getString("answersId");
+                    firstAnswer = answers.getString("firstAnswer");
+                    secondAnswer = answers.getString("secondAnswer");
+                    thirdAnswer = answers.getString("thirdAnswer");
+                    fourthAnswer = answers.getString("fourthAnswer");
+                    rightAnswer = answers.getString("rightAnswer");
+                }
+                Questions editQuestion = new Questions(editId,
+                        questionText,
+                        answersId,
+                        firstAnswer,
+                        secondAnswer,
+                        thirdAnswer,
+                        fourthAnswer,
+                        rightAnswer);
+                answers.close();
+                boolean editClicked = main.editQuestions(editQuestion, editId);
+                if(editClicked) {
+                    Database.showSimpleDialog(Alert.AlertType.INFORMATION, "Изменение данных", "Операция прошла успешно",
+                            "Данные успешно изменены!");
+                }
+            } catch (SQLException e) {
+                Database.throwingException(e);
+            }
+        }
     }
 
     public void addQuestionAction(ActionEvent actionEvent) {
         Questions newQuestion = new Questions();
         boolean addClicked = main.newQuestion(newQuestion);
         if(addClicked) {
-
             Database.showSimpleDialog(Alert.AlertType.INFORMATION, "Добавление данных", "Операция прошла успешно", "Данные успешно добавлены!");
         }
     }

@@ -189,6 +189,10 @@ public class Database {
     public static String select(String table, String field, String element) {
         String select = "";
         if(!table.isEmpty()) {
+            if(field.equals("count") && element.equals("count")) {
+                select = "SELECT COUNT(1) FROM " + table;
+                return select;
+            }
             if(field.equals("") && element.equals("")) {
                 select = "SELECT * FROM " + table;
                 return select;
